@@ -3,3 +3,7 @@ update-cron: '0 */5 * ? * *'
 bot:
   name: FFinCurrencyBot
   token: 6267723513:AAGbgeLnmqecciQV1mXfY1KAzb44o5EP7Z0
+
+logging:
+  level:
+    kz.asmirnov.ffin.ffincurrencynotifier.logging.LoggingInterceptor: DEBUG
