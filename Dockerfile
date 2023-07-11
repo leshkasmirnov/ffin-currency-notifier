@@ -1,5 +1,7 @@
 FROM openjdk:17-alpine
 
-COPY target/*.jar app.jar
+WORKDIR /app
 
-ENTRYPOINT java -jar app.jar
+COPY . /app
+
+RUN ./mvnw spring-boot:run
