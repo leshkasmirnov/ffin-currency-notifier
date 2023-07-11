@@ -1,7 +1,8 @@
-FROM openjdk:17-alpine
-
+FROM openjdk:17-jdk-slim
 WORKDIR /app
+COPY . .
+RUN ./mvnw clean package
 
-COPY . /app
-
-RUN ./mvnw spring-boot:run
+FROM openjdk:17-jdk-slim
+COPY --from=build /app/target/*.jar /app.jar
+CMD ["java", "-jar", "/app.jar"]
