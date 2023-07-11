@@ -1,5 +1,5 @@
 ffin-url: https://bankffin.kz
-update-cron: '0 */5 * ? * *'
+update-cron: '0 */15 * ? * *'
 bot:
   name: FFinCurrencyBot
   token: ${BOT_TOKEN:test-token}
