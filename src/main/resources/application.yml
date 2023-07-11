@@ -7,3 +7,9 @@ bot:
 logging:
   level:
     kz.asmirnov.ffin.ffincurrencynotifier.logging.LoggingInterceptor: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
