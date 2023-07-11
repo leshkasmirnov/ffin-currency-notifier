@@ -2,7 +2,7 @@ ffin-url: https://bankffin.kz
 update-cron: '0 */5 * ? * *'
 bot:
   name: FFinCurrencyBot
-  token: ${BOT_TOKEN}
+  token: ${BOT_TOKEN:test-token}
 
 logging:
   level:
