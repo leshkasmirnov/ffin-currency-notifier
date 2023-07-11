@@ -4,4 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN ./mvnw spring-boot:run
+RUN ./mvnw clean package
+
+CMD ["java", "-jar", "target/ffin-currency-notifier-0.0.1-SNAPSHOT.jar"]
