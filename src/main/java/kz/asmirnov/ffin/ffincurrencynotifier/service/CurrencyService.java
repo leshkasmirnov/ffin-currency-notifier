@@ -35,6 +35,7 @@ public class CurrencyService {
 
         Optional<CurrencyItem> currencyItem = actualRates.data().mobile().stream()
                 .filter(data -> "EUR".equals(data.buyCode()) && "RUB".equals(data.sellCode()))
+                .filter(data -> data.sellRate().compareTo(BigDecimal.valueOf(80L)) > 0)
                 .findFirst();
 
         return currencyItem.map(CurrencyItem::sellRate).orElse(null);
