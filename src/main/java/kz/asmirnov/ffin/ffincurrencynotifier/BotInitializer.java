@@ -31,11 +31,11 @@ public class BotInitializer {
     }
 
     @EventListener({ContextRefreshedEvent.class})
-    public void init()throws TelegramApiException {
+    public void init() throws TelegramApiException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        try{
+        try {
             telegramBotsApi.registerBot(telegramBot);
-        } catch (TelegramApiException e){
+        } catch (TelegramApiException e) {
             log.error("Error in initializing bot", e);
         }
 
