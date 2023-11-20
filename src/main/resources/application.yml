@@ -19,7 +19,6 @@ spring:
       mode: always
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/asmirnov}
-    password: ${DATABASE_PASSWORD:123456}
   jpa:
     defer-datasource-initialization: true
     hibernate:
