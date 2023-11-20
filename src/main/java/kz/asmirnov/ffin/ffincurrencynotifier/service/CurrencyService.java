@@ -1,82 +1,58 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.service;
 
-import kz.asmirnov.ffin.ffincurrencynotifier.data.CurrencyItem;
-import kz.asmirnov.ffin.ffincurrencynotifier.data.CurrencyListResponse;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.RateUpdate;
+import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyItem;
+import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Optional;
 
 @Service
 public class CurrencyService {
 
     private final Logger log = LoggerFactory.getLogger(CurrencyService.class);
 
-    private BigDecimal currentRate = null;
+    private final RatesProvider ratesProvider;
+    private final RateUpdateService rateUpdateService;
 
-    private final FFinService fFinService;
-
-    private final Map<Long, RateListener> listeners = new HashMap<>();
-
-    public CurrencyService(FFinService fFinService) {
-        this.fFinService = fFinService;
+    public CurrencyService(RatesProvider ratesProvider, RateUpdateService rateUpdateService) {
+        this.ratesProvider = ratesProvider;
+        this.rateUpdateService = rateUpdateService;
     }
 
-    public void addListener(long chatId, RateListener rateListener) {
-        listeners.put(chatId, rateListener);
-        log.info("Added listener with chatId: " + chatId);
-    }
-
-    public BigDecimal getCurrentRate() {
-        CurrencyListResponse actualRates = fFinService.getActualRates();
+    public BigDecimal getCurrentRate(CurrencyPair pair, Long correction) {
+        CurrencyListResponse actualRates = ratesProvider.getActualRates();
         log.info("Got rates: " + actualRates);
 
         Optional<CurrencyItem> currencyItem = actualRates.data().mobile().stream()
-                .filter(data -> "EUR".equals(data.buyCode()) && "RUB".equals(data.sellCode()))
-                .filter(data -> data.sellRate().compareTo(BigDecimal.valueOf(80L)) > 0)
+                .filter(data -> pair.currencyBuy().toString().equals(data.buyCode()) && pair.currencySell().toString().equals(data.sellCode()))
+                .filter(data -> data.sellRate().compareTo(BigDecimal.valueOf(correction)) > 0)
                 .findFirst();
 
         return currencyItem.map(CurrencyItem::sellRate).orElse(null);
     }
 
-    public void updateRate() {
-        if (listeners.isEmpty()) {
-            log.info("Listeners is empty. There is no need to update rate.");
-            return;
+    public Optional<RateUpdate> checkRate(CurrencyPair currencyPair) {
+        Optional<RateUpdate> result = Optional.empty();
+
+        Optional<BigDecimal> actualRate = ratesProvider.getActualRate(currencyPair);
+        if (actualRate.isEmpty()) {
+            return result;
+        }
+        Optional<RateUpdate> rateUpdate = rateUpdateService.findByCurrencyBuyAndCurrencySell(currencyPair);
+        if (rateUpdate.isPresent()) {
+            if (rateUpdate.get().lastRate().compareTo(actualRate.get()) != 0) {
+                result = Optional.of(rateUpdateService.updateRate(rateUpdate.get(), actualRate.get()));
+            }
+        } else {
+            result = Optional.of(rateUpdateService.saveRate(currencyPair, actualRate.get()));
         }
 
-        CurrencyListResponse actualRates = fFinService.getActualRates();
-        log.info("Got rates: " + actualRates);
-
-        Optional<CurrencyItem> currencyItem = actualRates.data().mobile().stream()
-                .filter(data -> "EUR".equals(data.buyCode()) && "RUB".equals(data.sellCode()))
-                .findFirst();
-
-        if (currencyItem.isPresent() &&
-                currencyItem.get().sellRate() != null) {
-
-            boolean needNotify = false;
-            BigDecimal sellRate = currencyItem.get().sellRate();
-            if (currentRate == null) {
-                currentRate = sellRate;
-                needNotify = true;
-            } else if (!sellRate.equals(currentRate)) {
-                currentRate = sellRate;
-                needNotify = true;
-            }
-
-            if (needNotify) {
-                // notify
-                log.info("Rates changes! Notify listeners: " + listeners);
-                listeners.forEach((key, value) -> value.updated(key, currentRate));
-            }
-        }
+        return result;
     }
 
-    public void removeListener(Long srcChatId) {
-        RateListener listener = listeners.remove(srcChatId);
-        log.info("Removed listener: " + listener);
-    }
 }

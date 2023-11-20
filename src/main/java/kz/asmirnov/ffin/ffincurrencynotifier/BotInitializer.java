@@ -1,6 +1,6 @@
 package kz.asmirnov.ffin.ffincurrencynotifier;
 
-import kz.asmirnov.ffin.ffincurrencynotifier.tg.TelegramBot;
+import kz.asmirnov.ffin.ffincurrencynotifier.tg.TgBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +18,19 @@ public class BotInitializer {
 
     private final Logger log = LoggerFactory.getLogger(BotInitializer.class);
 
-    private final TelegramBot telegramBot;
+    private final TgBot tgBot;
+
     @Autowired
-    public BotInitializer(TelegramBot telegramBot) {
-        this.telegramBot = telegramBot;
+    public BotInitializer(TgBot tgBot) {
+        this.tgBot = tgBot;
     }
 
     @EventListener({ContextRefreshedEvent.class})
-    public void init()throws TelegramApiException {
+    public void init() throws TelegramApiException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        try{
-            telegramBotsApi.registerBot(telegramBot);
-        } catch (TelegramApiException e){
+        try {
+            telegramBotsApi.registerBot(tgBot);
+        } catch (TelegramApiException e) {
             log.error("Error in initializing bot", e);
         }
     }

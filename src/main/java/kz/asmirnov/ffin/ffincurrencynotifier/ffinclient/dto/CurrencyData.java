@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.data;
+package kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto;
 
 import java.util.List;
 
