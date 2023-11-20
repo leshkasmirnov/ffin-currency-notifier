@@ -1,5 +1,6 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.logging;
+package kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.logging;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
@@ -19,7 +20,7 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
     private static final Logger log = LoggerFactory.getLogger(LoggingInterceptor.class);
 
     @Override
-    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+    public @NotNull ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
 
         logRequest(request, body);
         ClientHttpResponse response = execution.execute(request, body);

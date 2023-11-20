@@ -1,15 +1,15 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.service;
+package kz.asmirnov.ffin.ffincurrencynotifier.ffinclient;
 
-import kz.asmirnov.ffin.ffincurrencynotifier.data.CurrencyListResponse;
-import org.springframework.stereotype.Service;
+import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class FFinService {
+@Component
+public class FreedomFinanceClient {
 
     private final RestTemplate restTemplate;
 
-    public FFinService(RestTemplate restTemplate) {
+    public FreedomFinanceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

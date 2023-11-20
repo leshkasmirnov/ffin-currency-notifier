@@ -1,16 +1,17 @@
 package kz.asmirnov.ffin.ffincurrencynotifier;
 
-import kz.asmirnov.ffin.ffincurrencynotifier.logging.LoggingInterceptor;
-import org.springframework.beans.factory.annotation.Value;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
+import kz.asmirnov.ffin.ffincurrencynotifier.service.RateUpdateService;
+import kz.asmirnov.ffin.ffincurrencynotifier.service.SubscriptionService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.client.BufferingClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
@@ -21,14 +22,22 @@ public class FFinCurrencyNotifierApplication {
         SpringApplication.run(FFinCurrencyNotifierApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder, LoggingInterceptor loggingInterceptor, @Value("${ffin-url}") String ffinUrl) {
-        RestTemplate restTemplate = builder
-                .rootUri(ffinUrl)
-                .additionalInterceptors(loggingInterceptor)
-                .build();
-        restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new HttpComponentsClientHttpRequestFactory()));
-        return restTemplate;
+    @RestController
+    public static class TestController {
+
+        private final SubscriptionService subscriptionService;
+        private final RateUpdateService rateUpdateService;
+
+        public TestController(SubscriptionService subscriptionService, RateUpdateService rateUpdateService) {
+            this.subscriptionService = subscriptionService;
+            this.rateUpdateService = rateUpdateService;
+        }
+
+        @GetMapping("/subscribe")
+        public String subscribe() {
+            rateUpdateService.saveRate(new CurrencyPair(Currency.EUR, Currency.RUB), BigDecimal.TEN);
+            return "1";
+        }
     }
 
 }

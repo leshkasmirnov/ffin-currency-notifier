@@ -1,7 +1,10 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.tg;
 
 import kz.asmirnov.ffin.ffincurrencynotifier.config.BotConfig;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
 import kz.asmirnov.ffin.ffincurrencynotifier.service.CurrencyService;
+import kz.asmirnov.ffin.ffincurrencynotifier.service.SubscriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,18 +15,23 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
-public class TelegramBot extends TelegramLongPollingBot {
+public class TgBot extends TelegramLongPollingBot {
 
-    private static final Logger log = LoggerFactory.getLogger(TelegramBot.class);
+    private static final Logger log = LoggerFactory.getLogger(TgBot.class);
+
+    public static final String CURRENT_RATE_MESSAGE = "Current rate is %s";
 
     private final BotConfig botConfig;
 
     private final CurrencyService currencyService;
 
-    public TelegramBot(BotConfig botConfig, CurrencyService currencyService) {
+    private final SubscriptionService subscriptionService;
+
+    public TgBot(BotConfig botConfig, CurrencyService currencyService, SubscriptionService subscriptionService) {
         super(botConfig.token());
         this.botConfig = botConfig;
         this.currencyService = currencyService;
+        this.subscriptionService = subscriptionService;
     }
 
     @Override
@@ -33,15 +41,16 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         Long srcChatId = message.getChatId();
         switch (message.getText()) {
-            case ("/subscribe") -> currencyService.addListener(srcChatId,
-                    (chatId, currentRate) -> sendMessage(chatId, "Current rate is " + currentRate));
-            case ("/unsubscribe") -> currencyService.removeListener(srcChatId);
-            case ("/get") -> sendMessage(srcChatId, "Current rate is " + currencyService.getCurrentRate());
+            case ("/subscribe") -> subscriptionService.subscribe(srcChatId);
+            case ("/unsubscribe") -> subscriptionService.unsubscribe(srcChatId);
+            case ("/get") -> sendMessage(srcChatId,
+                    CURRENT_RATE_MESSAGE.formatted(currencyService.getCurrentRate(new CurrencyPair(Currency.EUR, Currency.RUB), 80L))
+            );
             default -> sendMessage(srcChatId, "I can't understand you, sorry!");
         }
     }
 
-    private void sendMessage(Long chatId, String textToSend) {
+    public void sendMessage(Long chatId, String textToSend) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(chatId));
         sendMessage.setText(textToSend);
