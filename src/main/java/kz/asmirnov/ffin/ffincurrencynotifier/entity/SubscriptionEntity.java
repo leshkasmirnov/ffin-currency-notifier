@@ -1,25 +1,15 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.entity;
 
-import jakarta.persistence.*;
 import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
 
 import java.util.Objects;
 
-@Entity
-@Table(name = "subscription")
 public class SubscriptionEntity {
-    @Id
-    @GeneratedValue(generator = "subscription_generator")
-    @SequenceGenerator(name = "subscription_generator", sequenceName = "subscription_id_seq", allocationSize = 1)
+
     private Long id;
     Long chatId;
-    @Enumerated(EnumType.STRING)
     Currency currencyBuy;
-    @Enumerated(EnumType.STRING)
     Currency currencySell;
-
-    public SubscriptionEntity() {
-    }
 
     public SubscriptionEntity(Long id, Long chatId, Currency currencyBuy, Currency currencySell) {
         this.id = id;

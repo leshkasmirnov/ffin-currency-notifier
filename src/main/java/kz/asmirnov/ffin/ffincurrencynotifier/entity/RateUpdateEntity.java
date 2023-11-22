@@ -1,28 +1,18 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.entity;
 
-import jakarta.persistence.*;
 import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "rate_update")
 public class RateUpdateEntity {
-    @Id
-    @GeneratedValue(generator = "rate_update_generator")
-    @SequenceGenerator(name = "rate_update_generator", sequenceName = "rate_update_id_seq", allocationSize = 1)
+
     private Long id;
-    @Enumerated(EnumType.STRING)
     private Currency currencyBuy;
-    @Enumerated(EnumType.STRING)
     private Currency currencySell;
     private BigDecimal lastRate;
     private LocalDateTime lastUpdate;
-
-    public RateUpdateEntity() {
-    }
 
     public RateUpdateEntity(Long id, Currency currencyBuy, Currency currencySell, BigDecimal lastRate, LocalDateTime lastUpdate) {
         this.id = id;

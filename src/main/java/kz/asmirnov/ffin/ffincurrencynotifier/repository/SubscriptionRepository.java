@@ -1,11 +1,14 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.repository;
 
 import kz.asmirnov.ffin.ffincurrencynotifier.entity.SubscriptionEntity;
-import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface SubscriptionRepository extends ListCrudRepository<SubscriptionEntity, Long> {
+import java.util.List;
+
+public interface SubscriptionRepository {
 
     void deleteByChatId(Long chatId);
+
+    SubscriptionEntity save(SubscriptionEntity subscriptionEntity);
+
+    List<SubscriptionEntity> findAll();
 }

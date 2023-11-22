@@ -12,3 +12,8 @@ create table if not exists rate_update(
                                           last_update timestamp,
                                           UNIQUE (currency_buy, currency_sell)
 );
+
+alter table subscription
+    alter column id type bigint using id::bigint;
+alter table rate_update
+    alter column id type bigint using id::bigint;

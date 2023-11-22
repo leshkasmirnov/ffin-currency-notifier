@@ -1,25 +1,29 @@
-ffin-url: https://bankffin.kz
-update-cron: '0 */15 * ? * *'
-bot:
-  name: FFinCurrencyBot
-  token: ${BOT_TOKEN:test-token}
+spring:
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:${DATABASE_URL:postgresql://localhost:5432/asmirnov}
+    driver-class-name: org.postgresql.Driver
 
-logging:
-  level:
-    kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.logging.logging.LoggingInterceptor: DEBUG
+server:
+  tomcat:
+    threads:
+      max: 2
+    max-connections: 10
 
 management:
   endpoints:
     web:
       exposure:
         include: info
-spring:
-  sql:
-    init:
-      mode: always
-  datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/asmirnov}
-  jpa:
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: none
+
+logging:
+  level:
+    kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.logging.logging.LoggingInterceptor: DEBUG
+
+ffin-url: https://bankffin.kz
+update-cron: '0 */15 * ? * *'
+bot:
+  name: FFinCurrencyBot
+  token: ${BOT_TOKEN:test-token}
