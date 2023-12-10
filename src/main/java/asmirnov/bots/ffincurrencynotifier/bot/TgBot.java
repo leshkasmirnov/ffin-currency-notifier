@@ -1,10 +1,10 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.bot;
+package asmirnov.bots.ffincurrencynotifier.bot;
 
 import jakarta.inject.Singleton;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
-import kz.asmirnov.ffin.ffincurrencynotifier.service.CurrencyService;
-import kz.asmirnov.ffin.ffincurrencynotifier.service.SubscriptionService;
+import asmirnov.bots.ffincurrencynotifier.dto.Currency;
+import asmirnov.bots.ffincurrencynotifier.dto.CurrencyPair;
+import asmirnov.bots.ffincurrencynotifier.service.CurrencyService;
+import asmirnov.bots.ffincurrencynotifier.service.SubscriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;

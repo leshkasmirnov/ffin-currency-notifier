@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.bot;
+package asmirnov.bots.ffincurrencynotifier.bot;
 
 import io.micronaut.context.annotation.Context;
 import jakarta.annotation.PostConstruct;

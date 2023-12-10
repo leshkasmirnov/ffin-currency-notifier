@@ -1,10 +1,10 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.service;
+package asmirnov.bots.ffincurrencynotifier.service;
 
+import asmirnov.bots.ffincurrencynotifier.dto.CurrencyPair;
+import asmirnov.bots.ffincurrencynotifier.ffinclient.FreedomFinanceClient;
+import asmirnov.bots.ffincurrencynotifier.ffinclient.dto.CurrencyItem;
+import asmirnov.bots.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
 import jakarta.inject.Singleton;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
-import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.FreedomFinanceClient;
-import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyItem;
-import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
 
 import java.math.BigDecimal;
 import java.util.Optional;

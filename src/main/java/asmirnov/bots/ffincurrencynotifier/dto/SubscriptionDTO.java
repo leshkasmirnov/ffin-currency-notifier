@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.dto;
+package asmirnov.bots.ffincurrencynotifier.dto;
 
 public record SubscriptionDTO(Long id, Long chatId, Currency currencyBuy, Currency currencySell) {
 }

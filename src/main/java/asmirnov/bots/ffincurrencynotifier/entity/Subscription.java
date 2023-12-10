@@ -1,10 +1,10 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.entity;
+package asmirnov.bots.ffincurrencynotifier.entity;
 
+import asmirnov.bots.ffincurrencynotifier.dto.Currency;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.annotation.GeneratedValue;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
 
 @MappedEntity
 public record Subscription(

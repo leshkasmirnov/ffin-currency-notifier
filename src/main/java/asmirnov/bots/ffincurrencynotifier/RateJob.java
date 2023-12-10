@@ -1,13 +1,13 @@
-package kz.asmirnov.ffin.ffincurrencynotifier;
+package asmirnov.bots.ffincurrencynotifier;
 
 import io.micronaut.scheduling.annotation.Scheduled;
 import jakarta.inject.Singleton;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.SubscriptionDTO;
-import kz.asmirnov.ffin.ffincurrencynotifier.service.CurrencyService;
-import kz.asmirnov.ffin.ffincurrencynotifier.service.SubscriptionService;
-import kz.asmirnov.ffin.ffincurrencynotifier.bot.TgBot;
+import asmirnov.bots.ffincurrencynotifier.dto.Currency;
+import asmirnov.bots.ffincurrencynotifier.dto.CurrencyPair;
+import asmirnov.bots.ffincurrencynotifier.dto.SubscriptionDTO;
+import asmirnov.bots.ffincurrencynotifier.service.CurrencyService;
+import asmirnov.bots.ffincurrencynotifier.service.SubscriptionService;
+import asmirnov.bots.ffincurrencynotifier.bot.TgBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

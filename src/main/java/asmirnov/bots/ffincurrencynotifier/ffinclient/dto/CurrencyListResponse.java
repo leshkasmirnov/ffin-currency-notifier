@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto;
+package asmirnov.bots.ffincurrencynotifier.ffinclient.dto;
 
 import io.micronaut.serde.annotation.Serdeable;
 

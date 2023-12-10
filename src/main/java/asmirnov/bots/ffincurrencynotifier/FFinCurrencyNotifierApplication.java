@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier;
+package asmirnov.bots.ffincurrencynotifier;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

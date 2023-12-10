@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.bot;
+package asmirnov.bots.ffincurrencynotifier.bot;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.NonNull;

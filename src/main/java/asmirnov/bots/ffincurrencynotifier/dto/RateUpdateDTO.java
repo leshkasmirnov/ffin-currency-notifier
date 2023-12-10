@@ -1,4 +1,4 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.dto;
+package asmirnov.bots.ffincurrencynotifier.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

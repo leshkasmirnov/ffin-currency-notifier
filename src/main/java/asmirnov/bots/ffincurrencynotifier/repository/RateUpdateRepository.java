@@ -1,12 +1,12 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.repository;
+package asmirnov.bots.ffincurrencynotifier.repository;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.CrudRepository;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
-import kz.asmirnov.ffin.ffincurrencynotifier.entity.RateUpdate;
+import asmirnov.bots.ffincurrencynotifier.dto.Currency;
+import asmirnov.bots.ffincurrencynotifier.entity.RateUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>kz.asmirnov.ffin</groupId>
+	<groupId>asmirnov.bots</groupId>
 	<artifactId>ffin-currency-notifier</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ffin-currency-notifier</name>
@@ -22,9 +22,9 @@
 <!--		<release.version>21</release.version>-->
 		<micronaut.runtime>netty</micronaut.runtime>
 		<micronaut.aot.enabled>false</micronaut.aot.enabled>
-		<micronaut.aot.packageName>kz.asmirnov.ffin.ffincurrencynotifier.aot.generated</micronaut.aot.packageName>
+		<micronaut.aot.packageName>asmirnov.bots.ffincurrencynotifier.aot.generated</micronaut.aot.packageName>
 		<micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
-		<exec.mainClass>kz.asmirnov.ffin.ffincurrencynotifier.FFinCurrencyNotifierApplication</exec.mainClass>
+		<exec.mainClass>asmirnov.bots.ffincurrencynotifier.FFinCurrencyNotifierApplication</exec.mainClass>
 	</properties>
 	<dependencies>
 
@@ -159,7 +159,7 @@
 						</path>
 					</annotationProcessorPaths>
 					<compilerArgs>
-						<arg>-Amicronaut.processing.group=kz.asmirnov.ffin</arg>
+						<arg>-Amicronaut.processing.group=asmirnov.bots</arg>
 						<arg>-Amicronaut.processing.module=ffin-currency-notifier</arg>
 					</compilerArgs>
 				</configuration>

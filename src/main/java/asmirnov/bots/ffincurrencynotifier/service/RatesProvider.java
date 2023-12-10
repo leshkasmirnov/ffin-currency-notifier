@@ -1,7 +1,7 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.service;
+package asmirnov.bots.ffincurrencynotifier.service;
 
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
-import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
+import asmirnov.bots.ffincurrencynotifier.dto.CurrencyPair;
+import asmirnov.bots.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
 
 import java.math.BigDecimal;
 import java.util.Optional;

@@ -1,3 +1,3 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.dto;
+package asmirnov.bots.ffincurrencynotifier.dto;
 
 public record CurrencyPair(Currency currencyBuy, Currency currencySell) {}

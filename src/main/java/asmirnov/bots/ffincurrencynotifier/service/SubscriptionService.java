@@ -1,11 +1,11 @@
-package kz.asmirnov.ffin.ffincurrencynotifier.service;
+package asmirnov.bots.ffincurrencynotifier.service;
 
+import asmirnov.bots.ffincurrencynotifier.dto.Currency;
+import asmirnov.bots.ffincurrencynotifier.dto.SubscriptionDTO;
+import asmirnov.bots.ffincurrencynotifier.entity.Subscription;
+import asmirnov.bots.ffincurrencynotifier.repository.SubscriptionRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.Currency;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.SubscriptionDTO;
-import kz.asmirnov.ffin.ffincurrencynotifier.entity.Subscription;
-import kz.asmirnov.ffin.ffincurrencynotifier.repository.SubscriptionRepository;
 
 import java.util.List;
 
