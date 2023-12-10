@@ -29,6 +29,7 @@ flyway:
   datasources:
     default:
       enabled: true
+      baseline-on-migrate: true
 
 ffin-url: https://bankffin.kz
 update-cron: '0 */15 * ? * *'
