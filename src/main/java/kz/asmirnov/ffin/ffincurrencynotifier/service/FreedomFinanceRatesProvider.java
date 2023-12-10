@@ -1,21 +1,19 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.service;
 
+import jakarta.inject.Singleton;
 import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
 import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.FreedomFinanceClient;
 import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyItem;
 import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@Service
+@Singleton
 public class FreedomFinanceRatesProvider implements RatesProvider {
 
     private final FreedomFinanceClient client;
 
-    @Autowired
     public FreedomFinanceRatesProvider(FreedomFinanceClient client) {
         this.client = client;
     }

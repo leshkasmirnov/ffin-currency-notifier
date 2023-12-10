@@ -1,33 +1,30 @@
 package kz.asmirnov.ffin.ffincurrencynotifier;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.runtime.Micronaut;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 
-@SpringBootApplication(scanBasePackages = "kz.asmirnov.ffin.ffincurrencynotifier")
-@ConfigurationPropertiesScan
-@EnableScheduling
 public class FFinCurrencyNotifierApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FFinCurrencyNotifierApplication.class, args);
+        Micronaut.run(FFinCurrencyNotifierApplication.class);
     }
 
-    @RestController
-    public static class TestController {
+    @Controller
+    @ExecuteOn(TaskExecutors.BLOCKING)
+    public static class JobController {
         private final RateJob rateJob;
 
-        public TestController(RateJob rateJob) {
+        public JobController(RateJob rateJob) {
             this.rateJob = rateJob;
         }
 
-        @GetMapping("/checkRate")
-        public String subscribe() {
+        @Get("/checkRate")
+        public String checkRate() {
             rateJob.checkRate();
-            return "1";
+            return "ok";
         }
     }
 

@@ -1,50 +1,50 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.service;
 
+import jakarta.inject.Singleton;
 import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.RateUpdate;
-import kz.asmirnov.ffin.ffincurrencynotifier.entity.RateUpdateEntity;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.RateUpdateDTO;
+import kz.asmirnov.ffin.ffincurrencynotifier.entity.RateUpdate;
 import kz.asmirnov.ffin.ffincurrencynotifier.repository.RateUpdateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@Service
+@Singleton
 public class RateUpdateService {
 
     private final RateUpdateRepository repository;
 
-    @Autowired
     public RateUpdateService(RateUpdateRepository repository) {
         this.repository = repository;
     }
 
-    public Optional<RateUpdate> findByCurrencyBuyAndCurrencySell(CurrencyPair currencyPair) {
-        Optional<RateUpdateEntity> rateUpdate =
+    public Optional<RateUpdateDTO> findByCurrencyBuyAndCurrencySell(CurrencyPair currencyPair) {
+        Optional<RateUpdate> rateUpdate =
                 repository.findByCurrencyBuyAndCurrencySell(currencyPair.currencyBuy(), currencyPair.currencySell());
 
         return rateUpdate.map(r ->
-                new RateUpdate(r.getId(), new CurrencyPair(r.getCurrencyBuy(), r.getCurrencySell()), r.getLastRate(), r.getLastUpdate())
+                new RateUpdateDTO(r.id(), new CurrencyPair(r.currencyBuy(), r.currencySell()), r.lastRate(), r.lastUpdate())
         );
     }
 
-    public RateUpdate updateRate(RateUpdate rateUpdate, BigDecimal actualRate) {
-        Optional<RateUpdateEntity> entity = repository.findById(rateUpdate.id());
+    public RateUpdateDTO updateRate(RateUpdateDTO rateUpdate, BigDecimal actualRate) {
+        Optional<RateUpdate> entity = repository.findById(rateUpdate.id());
 
         if (entity.isPresent()) {
-            RateUpdateEntity rateUpdateEntity = entity.get();
-            rateUpdateEntity.setLastRate(actualRate);
-            rateUpdateEntity.setLastUpdate(LocalDateTime.now());
-            return toDTO(repository.save(rateUpdateEntity));
+            RateUpdate fromDb = entity.get();
+            int rowsCount = repository.update(fromDb.id(), actualRate, LocalDateTime.now());
+            if (rowsCount > 0) {
+                return new RateUpdateDTO(fromDb.id(), new CurrencyPair(fromDb.currencyBuy(), fromDb.currencySell()), actualRate, LocalDateTime.now());
+            }
+            return rateUpdate;
         } else {
             throw new RuntimeException("Entity with id [" + rateUpdate.id() + "] not found");
         }
     }
 
-    public RateUpdate saveRate(CurrencyPair currencyPair, BigDecimal actualRate) {
-        RateUpdateEntity savedEntity = repository.save(new RateUpdateEntity(null,
+    public RateUpdateDTO saveRate(CurrencyPair currencyPair, BigDecimal actualRate) {
+        RateUpdate savedEntity = repository.save(new RateUpdate(null,
                 currencyPair.currencyBuy(),
                 currencyPair.currencySell(),
                 actualRate,
@@ -54,8 +54,8 @@ public class RateUpdateService {
         return toDTO(savedEntity);
     }
 
-    private RateUpdate toDTO(RateUpdateEntity entity) {
-        return new RateUpdate(entity.getId(), new CurrencyPair(entity.getCurrencyBuy(), entity.getCurrencySell()),
-                entity.getLastRate(), entity.getLastUpdate());
+    private RateUpdateDTO toDTO(RateUpdate entity) {
+        return new RateUpdateDTO(entity.id(), new CurrencyPair(entity.currencyBuy(), entity.currencySell()),
+                entity.lastRate(), entity.lastUpdate());
     }
 }

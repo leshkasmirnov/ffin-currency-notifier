@@ -1,17 +1,17 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.service;
 
+import jakarta.inject.Singleton;
 import kz.asmirnov.ffin.ffincurrencynotifier.dto.CurrencyPair;
-import kz.asmirnov.ffin.ffincurrencynotifier.dto.RateUpdate;
+import kz.asmirnov.ffin.ffincurrencynotifier.dto.RateUpdateDTO;
 import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyItem;
 import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@Service
+@Singleton
 public class CurrencyService {
 
     private final Logger log = LoggerFactory.getLogger(CurrencyService.class);
@@ -36,14 +36,14 @@ public class CurrencyService {
         return currencyItem.map(CurrencyItem::sellRate).orElse(null);
     }
 
-    public Optional<RateUpdate> checkRate(CurrencyPair currencyPair) {
-        Optional<RateUpdate> result = Optional.empty();
+    public Optional<RateUpdateDTO> checkRate(CurrencyPair currencyPair) {
+        Optional<RateUpdateDTO> result = Optional.empty();
 
         Optional<BigDecimal> actualRate = ratesProvider.getActualRate(currencyPair);
         if (actualRate.isEmpty()) {
             return result;
         }
-        Optional<RateUpdate> rateUpdate = rateUpdateService.findByCurrencyBuyAndCurrencySell(currencyPair);
+        Optional<RateUpdateDTO> rateUpdate = rateUpdateService.findByCurrencyBuyAndCurrencySell(currencyPair);
         if (rateUpdate.isPresent()) {
             if (rateUpdate.get().lastRate().compareTo(actualRate.get()) != 0) {
                 result = Optional.of(rateUpdateService.updateRate(rateUpdate.get(), actualRate.get()));

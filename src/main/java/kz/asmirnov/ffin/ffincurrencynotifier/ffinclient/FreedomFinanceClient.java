@@ -1,19 +1,12 @@
 package kz.asmirnov.ffin.ffincurrencynotifier.ffinclient;
 
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.client.annotation.Client;
 import kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.dto.CurrencyListResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
-@Component
-public class FreedomFinanceClient {
+@Client(id = "ffin")
+public interface FreedomFinanceClient {
 
-    private final RestTemplate restTemplate;
-
-    public FreedomFinanceClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    public CurrencyListResponse getActualRates() {
-        return restTemplate.getForObject("/api/exchange-rates/getRates", CurrencyListResponse.class);
-    }
+    @Get("/api/exchange-rates/getRates")
+    CurrencyListResponse getActualRates();
 }

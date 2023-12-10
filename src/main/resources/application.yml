@@ -1,29 +1,37 @@
-spring:
-  sql:
-    init:
-      mode: always
-  datasource:
-    url: jdbc:${DATABASE_URL:postgresql://localhost:5432/asmirnov}
-    driver-class-name: org.postgresql.Driver
+micronaut:
+  server:
+    port: 8080
+  application:
+    name: ffin-currency-bot
+  http:
+    services:
+      ffin:
+        url: https://bankffin.kz
 
-server:
-  tomcat:
-    threads:
-      max: 2
-    max-connections: 10
+datasources:
+  default:
+    url: jdbc:${DATABASE_URL:`postgresql://localhost:5432/a.smirnov19`}
+    dialect: POSTGRES
+    driverClassName: org.postgresql.Driver
+    minPoolSize: 1
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info
+jpa:
+  default:
+    properties:
+      hibernate:
+        bytecode:
+          provider: none
+        hbm2ddl:
+          auto: validate
+        show_sql: false
 
-logging:
-  level:
-    kz.asmirnov.ffin.ffincurrencynotifier.ffinclient.logging.logging.LoggingInterceptor: DEBUG
+flyway:
+  datasources:
+    default:
+      enabled: true
 
 ffin-url: https://bankffin.kz
 update-cron: '0 */15 * ? * *'
 bot:
   name: FFinCurrencyBot
-  token: ${BOT_TOKEN:test-token}
+  token: ${BOT_TOKEN:tst}
