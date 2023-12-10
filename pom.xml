@@ -5,7 +5,7 @@
 
 	<groupId>asmirnov.bots</groupId>
 	<artifactId>ffin-currency-notifier</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>ffin-currency-notifier</name>
 	<description>Telegram bot, that notify when currency changes</description>
 	<packaging>${packaging}</packaging>
