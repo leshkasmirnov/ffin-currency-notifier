@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-alpine
 
 WORKDIR /app
 
@@ -8,4 +8,5 @@ RUN ./mvnw clean package
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "target/ffin-currency-notifier-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/ffin-currency-notifier-2.0.1-SNAPSHOT.jar"]
+

@@ -1,0 +1,5 @@
+app = "weathered-wind-4819"
+
+[http_service]
+  internal_port = 8080
+  auto_stop_machines = false
